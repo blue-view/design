@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>原型设计模式</title>
+    <script>
+        function Field(type, displayText) {
+            this.type = type || '';
+            this.displayText = displayText || '';
+        }
+        Field.prototype = {
+            getElement: function () {
+                var field = document.createElement("input");
+                field.setAttribute("type", this.type)
+                field.setAttribute('placeholder', this.displayText)
+                return field;
+            } 
+        };
+        var textField = new Field(
+                "text",
+                'Enter the first line of your address'
+            ),
+            emailField = new Field(
+                "email",
+                'Enter  your email'
+            )
+
+        var field2 = {
+                type: '',
+                displayText: '',
+                getElement: function () {
+                    var field = document.createElement("input");
+                    field.setAttribute("type", this.type)
+                    field.setAttribute('placeholder', this.displayText)
+                    return field;
+                }
+            },
+            textField2 = Object.create(field2, {
+                'type': {
+                    value: 'type',
+                    enumerable: true
+                },
+                'displayText': {
+                    value: 'Enter the first line of your address',
+                    enumerable: true
+                }
+            }),
+
+            emailField2 = Object.create(field2, {
+                'type': {
+                    value: 'email',
+                    enumerable: true
+                },
+                'displayText': {
+                    value: 'Enter email address',
+                    enumerable: true
+                }
+            });
+        window.addEventListener("load", () => {
+            let bodyElement = document.body;
+            bodyElement.appendChild(textField.getElement())
+            bodyElement.appendChild(emailField.getElement())
+            bodyElement.appendChild(textField2.getElement())
+            bodyElement.appendChild(emailField2.getElement())
+        }, false)
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
